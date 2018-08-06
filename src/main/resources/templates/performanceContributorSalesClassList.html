@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/ticketingHeader :: header"></th:block> /*/-->
+    <h2>Performance Contributor Sales Class List</h2>
+
+    <nav class="navbar navbar-expand-lg navbar-light style="background-color: #e3f2fd;" rounded">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <button type="button" class="btn btn-outline-primary" sec:authorize="hasRole('ROLE_TICKETER')"> <a th:href="${'/performanceContributorSalesClass/new'}">Add</a> </button>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </nav>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Performance</th>
+            <th>Contributor</th>
+            <th>Sales Class</th>
+            <th>Status</th>
+            <th>Count</th>
+            <th>Action</th>
+        </tr>
+        <!--suppress HtmlUnknownAttribute -->
+        <tr th:each="performanceContributorSalesClass : ${performanceContributorSalesClasses}">
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${performanceContributorSalesClass.performance}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${performanceContributorSalesClass.concertContributor.contributor.name}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${performanceContributorSalesClass.salesClass.name}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${performanceContributorSalesClass.ticketStatus}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${performanceContributorSalesClass.count}"></td>
+            <td>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/performanceContributorSalesClass/' + performanceContributorSalesClass.id}">Show</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/performanceContributorSalesClass/edit/' + performanceContributorSalesClass.id}" sec:authorize="hasRole('ROLE_TICKETER')" >Edit</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/performanceContributorSalesClass/delete/' + performanceContributorSalesClass.id}" sec:authorize="hasRole('ROLE_TICKETER')" >Delete</a>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

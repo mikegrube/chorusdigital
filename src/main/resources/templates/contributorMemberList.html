@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+    <style>
+.pagination-centered {
+    text-align: center;
+}
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.pointer-disabled {
+    pointer-events: none;
+}
+</style>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <h2>Contributor List</h2>
+
+    <nav class="navbar navbar-expand-lg navbar-light style="background-color: #e3f2fd;" rounded">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <button type="button" class="btn btn-outline-primary"><a th:href="${'/contributor/list'}">List</a></button>
+                    <button type="button" class="btn btn-outline-primary"><a th:href="${'/contributor/listMember?member=true'}">List Members</a></button>
+                    <button type="button" class="btn btn-outline-primary"><a th:href="${'/contributor/listMember?member=false'}">List Non-Members</a></button>
+                    <button type="button" class="btn btn-outline-primary" sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="${'/contributor/new'}">Add</a> </button>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </nav>
+
+    <table class="table table-striped">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Member</th>
+            <th>Section</th>
+            <th>Action</th>
+        </tr>
+        <!--suppress HtmlUnknownAttribute -->
+        <tr th:each="contributor : ${contributors}">
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${contributor.firstName}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${contributor.lastName}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${contributor.member}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${contributor.section}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/contributor/' + contributor.id}">Show</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/contributor/edit/' + contributor.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Edit</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/contributor/delete/' + contributor.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Delete</a>
+            </td>
+        </tr>
+    </table>
+
+    <div class="row">
+        <div class="form-group col-md-1">
+            <select class="form-control pagination" id="pageSizeSelect">
+                <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}"
+                        th:value="${pageSize}"
+                        th:selected="${pageSize} == ${selectedPageSize}"></option>
+            </select>
+        </div>
+        <div th:if="${contributors.totalPages != 1}"
+             class="form-group col-md-11 pagination-centered">
+            <ul class="pagination">
+                <li th:class="${contributors.number == 0} ? disabled"><a
+                        class="page-link"
+                        th:href="@{/contributor/listMember(pageSize=${selectedPageSize}, page=1, member=${member})}">«</a>
+                </li>
+                <li th:class="${contributors.number == 0} ? disabled"><a
+                        class="page-link"
+                        th:href="@{/contributor/listMember(pageSize=${selectedPageSize}, page=${contributors.number}, member=${member})}">←</a>
+                </li>
+                <li
+                        th:class="${contributors.number == (page - 1)} ? 'active pointer-disabled'"
+                        th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                    <a class="page-link"
+                       th:href="@{/contributor/listMember(pageSize=${selectedPageSize}, page=${page}, member=${member})}"
+                       th:text="${page}"></a>
+                </li>
+                <li
+                        th:class="${contributors.number + 1 == contributors.totalPages} ? disabled">
+                    <a class="page-link"
+                       th:href="@{/contributor/listMember(pageSize=${selectedPageSize}, page=${contributors.number + 2}, member=${member})}">→</a>
+                </li>
+                <li
+                        th:class="${contributors.number + 1 == contributors.totalPages} ? disabled">
+                    <a class="page-link"
+                       th:href="@{/contributor/listMember(pageSize=${selectedPageSize}, page=${contributors.totalPages}, member=${member})}">»</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function() {
+    changePageAndSize();
+});
+function changePageAndSize() {
+    $('#pageSizeSelect').change(function(evt) {
+        window.location.replace("/contributor/list?pageSize=" + this.value + "&page=1");
+    });
+}
+        /*]]>*/
+</script>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <h2>Photo List</h2>
+
+    <nav class="navbar navbar-expand-lg navbar-light style="background-color: #e3f2fd;" rounded">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <button type="button" class="btn btn-outline-primary" sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="${'/photo/new'}">Add</a> </button>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </nav>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Caption</th>
+            <th>Year</th>
+            <th>Event</th>
+            <th>Photo Location</th>
+            <th>Action</th>
+        </tr>
+        <!--suppress HtmlUnknownAttribute -->
+        <tr th:each="photo : ${photos}">
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${photo.caption}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${photo.year}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${photo.event}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${photo.photoLocation}"></td>
+            <td>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/photo/' + photo.id}">Show</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/photo/edit/' + photo.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Edit</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/photo/delete/' + photo.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Delete</a>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <h2>Performance</h2>
+    <div>
+        <!--suppress HtmlUnknownAttribute, HtmlUnknownAttribute -->
+        <form th:object="${performance}" th:action="@{/performance/save}" method="post">
+
+            <!--suppress HtmlUnknownAttribute -->
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Concert:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <select th:field="*{concert}" autofocus="autofocus" >
+                        <!--suppress HtmlUnknownAttribute, HtmlUnknownAttribute, HtmlUnknownAttribute -->
+                        <option th:each="concert : ${concerts}"
+                                th:value="${concert.id}"
+                                th:text="${concert.title}">Wireframe</option>
+                    </select>
+                    <div class="validation-error" th:if="${#fields.hasErrors('concert')}" th:errors="*{concert}">Null concert</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Venue:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <select th:field="*{venue}">
+                        <!--suppress HtmlUnknownAttribute, HtmlUnknownAttribute, HtmlUnknownAttribute -->
+                        <option th:each="venue : ${venues}"
+                                th:value="${venue.id}"
+                                th:text="${venue.name}">Wireframe</option>
+                    </select>
+                    <div class="validation-error" th:if="${#fields.hasErrors('venue')}" th:errors="*{venue}">Null venue</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Date/Time:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <input type="text" class="form-control" th:field="*{dateTimeString}"/>
+                    <div class="validation-error" th:if="${#fields.hasErrors('dateTimeString')}" th:errors="*{dateTimeString}">Null dateTime</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">First Ticket:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <input type="text" class="form-control" th:field="*{firstTicket}"/>
+                    <div class="validation-error" th:if="${#fields.hasErrors('firstTicket')}" th:errors="*{firstTicket}">First ticket</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Last Ticket:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <input type="text" class="form-control" th:field="*{lastTicket}"/>
+                    <div class="validation-error" th:if="${#fields.hasErrors('lastTicket')}" th:errors="*{lastTicket}">Last ticket</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Notes:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <textarea rows = "10" cols = "50" th:field="*{notes}">...</textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/adminHeader :: header"></th:block> /*/-->
+
+    <h1>Chorus Digital Notes</h1>
+
+    <p> These are notes about maintaining this app.</p>
+    <p> The application is a Spring Boot application (Java). It is encapsulated in a single executable jar file which is
+    run as a service on a Linux server. The application has an embedded Tomcat web server and uses an H2 database for
+    persistence.</p>
+    <p> The app is generally developed in JetBrains' Idea, although this is not required. It is backed up in a git
+    repository. The app uses Gradle for a build system. </p>
+    <p> Major dependencies are:
+    <ul>
+    <li>spring-boot-starter-web (web controllers)</li>
+    <li>spring-boot-starter-jpa (persistence)</li>
+    <li>spring-boot-starter-thymeleaf (web page formatting)</li>
+    <li>spring-boot-starter-actuator (web metrics)</li>
+    <li>spring-boot-starter-security</li>
+    <li>h2 (database)</li>
+    <li>Other auxiliary components</li>
+    </ul></p>
+</div>
+
+</body>
+</html>

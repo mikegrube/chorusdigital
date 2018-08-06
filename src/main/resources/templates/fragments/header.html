@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+
+    <title>Chorus Digital</title>
+
+</head>
+<body>
+
+<div class="container">
+    <div th:fragment="header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" th:href="@{/}">
+                    <img alt="Group" src="/files/logo.png" th:src="@{/files/logo.png}" height="30"/>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/about}">About</a></li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authorize="isAuthenticated()">Seasons</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" th:href="@{/season/list}" sec:authorize="hasRole('ROLE_READER')" >Seasons</a>
+                            <a class="dropdown-item" href="#" th:href="@{/concert/list}" sec:authorize="hasRole('ROLE_READER')" >Concerts</a>
+                            <a class="dropdown-item" href="#" th:href="@{/performance/list}" sec:authorize="hasRole('ROLE_READER')" >Performances</a>
+
+                            <a class="dropdown-item" href="#" th:href="@{/venue/list}" sec:authorize="hasRole('ROLE_READER')" >Venues</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/contributor/list}" sec:authorize="hasRole('ROLE_ADMIN')">Contributors</a></li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authorize="isAuthenticated()">Music</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" th:href="@{/work/list}" sec:authorize="hasRole('ROLE_READER')" >Works</a>
+                            <a class="dropdown-item" href="#" th:href="@{/musicContributor/list}" sec:authorize="hasRole('ROLE_READER')">Composers+</a>
+                            <a class="dropdown-item" href="#" th:href="@{/concertWork/list}" sec:authorize="hasRole('ROLE_ADMIN')" >Concert Works</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authorize="isAuthenticated()">Volunteering</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" th:href="@{/event/list}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR')">Events</a>
+                            <a class="dropdown-item" href="#" th:href="@{/task/listAvailable}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR', 'ROLE_VOLUNTEER')">Opportunities</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authorize="isAuthenticated()">Other</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" th:href="@{/admin/index}" sec:authorize="hasAuthority('ROLE_ADMIN')">Admin</a>
+                            <a class="dropdown-item" href="#" th:href="@{/ticketing/index}" sec:authorize="hasAuthority('ROLE_TICKETER')">Ticketing</a>
+                            <a class="dropdown-item" href="#" th:href="@{/reporting/list}" sec:authorize="isAuthenticated()">Reporting</a>
+                            <a class="dropdown-item" href="#" th:href="@{/photo/list}" sec:authorize="isAuthenticated()">Gallery</a>
+                            <a class="dropdown-item" href="#" th:href="@{/admin/feedback/list}" sec:authorize="isAuthenticated()">Feedback</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/help/list}" sec:authorize="isAuthenticated()">Help</a></li>
+
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/login}" sec:authorize="isAnonymous()">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/admin/user/register}" sec:authorize="isAnonymous()">Register (Volunteer)</a></li>
+                    <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span sec:authentication="name"></span></a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-link" href="#" th:href="@{/admin/user/changePassword}">Change Password</a>
+                            <a class="dropdown-link" href="#" th:href="@{/logout}">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

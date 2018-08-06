@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <h2>Concert Search List</h2>
+
+    <nav class="navbar navbar-expand-lg navbar-light style="background-color: #e3f2fd;" rounded">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <button type="button" class="btn btn-outline-primary"><a th:href="${'/concert/list'}">List By Name</a></button>
+                    <button type="button" class="btn btn-outline-primary"><a th:href="${'/concert/listBySeason'}">List By Season</a></button>
+                    <button type="button" class="btn btn-outline-primary"><a th:href="${'/concert/search'}">Search</a></button>
+                    <button type="button" class="btn btn-outline-primary" sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="${'/concert/new'}">Add</a></button>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </nav>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Season</th>
+            <th>Title</th>
+            <th>Prefix</th>
+            <th>Active</th>
+            <th>Action</th>
+        </tr>
+        <!--suppress HtmlUnknownAttribute -->
+        <tr th:each="concert : ${concerts}">
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${concert.season}">Season</td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${concert.title}">Title</td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${concert.prefix}">Prefix</td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${concert.getActive()}">Active</td>
+            <td>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/concert/' + concert.id}">Show</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/concert/edit/' + concert.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Edit</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/concert/delete/' + concert.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Delete</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/concert/activate/' + concert.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Activate</a>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

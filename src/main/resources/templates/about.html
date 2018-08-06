@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <!--suppress HtmlUnknownAttribute -->
+            <p class="form-control-static" th:utext="${aboutText}"></p>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

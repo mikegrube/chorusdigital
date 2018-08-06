@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+    <style>
+.pagination-centered {
+    text-align: center;
+}
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.pointer-disabled {
+    pointer-events: none;
+}
+</style>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <h2>Performance List</h2>
+
+    <nav class="navbar navbar-expand-lg navbar-light style="background-color: #e3f2fd;" rounded">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <button type="button" class="btn btn-outline-primary" sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="${'/performance/new'}">Add</a> </button>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </nav>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Concert</th>
+            <th>Venue</th>
+            <th>Date/Time</th>
+            <th>First Ticket</th>
+            <th>Last Ticket</th>
+            <th>Action</th>
+        </tr>
+        <!--suppress HtmlUnknownAttribute -->
+        <tr th:each="performance : ${performances}">
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${performance.concert.title}">Concert</td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${performance.venue.name}">Venue</td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${performance.dateTimeString}">Date/Time</td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${performance.firstTicket}">First Ticket</td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${performance.lastTicket}">Last Ticket</td>
+            <td>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/performance/' + performance.id}">Show</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/performance/edit/' + performance.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Edit</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/performance/delete/' + performance.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Delete</a>
+            </td>
+        </tr>
+    </table>
+
+    <div class="row">
+        <div class="form-group col-md-1">
+            <select class="form-control pagination" id="pageSizeSelect">
+                <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}"
+                        th:value="${pageSize}"
+                        th:selected="${pageSize} == ${selectedPageSize}"></option>
+            </select>
+        </div>
+        <div th:if="${performances.totalPages != 1}"
+             class="form-group col-md-11 pagination-centered">
+            <ul class="pagination">
+                <li th:class="${performances.number == 0} ? disabled"><a
+                        class="page-link"
+                        th:href="@{/performance/list(pageSize=${selectedPageSize}, page=1)}">«</a>
+                </li>
+                <li th:class="${performances.number == 0} ? disabled"><a
+                        class="page-link"
+                        th:href="@{/performance/list(pageSize=${selectedPageSize}, page=${performances.number})}">←</a>
+                </li>
+                <li
+                        th:class="${performances.number == (page - 1)} ? 'active pointer-disabled'"
+                        th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                    <a class="page-link"
+                       th:href="@{/performance/list(pageSize=${selectedPageSize}, page=${page})}"
+                       th:text="${page}"></a>
+                </li>
+                <li
+                        th:class="${performances.number + 1 == performances.totalPages} ? disabled">
+                    <a class="page-link"
+                       th:href="@{/performance/list(pageSize=${selectedPageSize}, page=${performances.number + 2})}">→</a>
+                </li>
+                <li
+                        th:class="${performances.number + 1 == performances.totalPages} ? disabled">
+                    <a class="page-link"
+                       th:href="@{/performance/list(pageSize=${selectedPageSize}, page=${performances.totalPages})}">»</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function() {
+    changePageAndSize();
+});
+function changePageAndSize() {
+    $('#pageSizeSelect').change(function(evt) {
+        window.location.replace("/performance/list?pageSize=" + this.value + "&page=1");
+    });
+}
+        /*]]>*/
+</script>
+
+</body>
+</html>

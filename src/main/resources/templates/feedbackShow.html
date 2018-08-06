@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <h2>Feedback</h2>
+
+    <nav class="navbar navbar-expand-lg navbar-light style="background-color: #e3f2fd;" rounded">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <button type="button" class="btn btn-outline-primary"> <a th:href="${'/admin/feedback/list'}">List</a> </button>
+                    <button type="button" class="btn btn-outline-primary" sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="${'/admin/feedback/new'}">Add</a> </button>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </nav>
+
+    <div>
+        <form class="form-horizontal">
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">User:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <p class="form-control-static" th:text="${feedback.user}">User</p>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Date:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <p class="form-control-static" th:text="${feedback.dateTimeString}">DateTime</p>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Comment:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <p class="form-control-static" th:text="${feedback.text}">Text</p>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Followup:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <p class="form-control-static" th:text="${feedback.followup}">Followup</p>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

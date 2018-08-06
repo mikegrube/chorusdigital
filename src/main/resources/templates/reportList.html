@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <table class="table table-striped">
+        <tr>
+            <th>Report</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+        <!--suppress HtmlUnknownAttribute -->
+        <tr th:each="report : ${reports}">
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${report.title}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${report.description}">Title</td>
+            <td>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/reporting/report/' + report.title}">Show</a>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

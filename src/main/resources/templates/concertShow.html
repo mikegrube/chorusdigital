@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <h2>Concert</h2>
+
+    <nav class="navbar navbar-expand-lg navbar-light style="background-color: #e3f2fd;" rounded">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <button type="button" class="btn btn-outline-primary"><a th:href="${'/concert/list'}">List</a></button>
+                        <button type="button" class="btn btn-outline-primary" sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="${'/concert/new'}">Add</a></button>
+                        <button type="button" class="btn btn-outline-primary" sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="${'/concert/edit/' + concert.id}">Edit</a></button>
+                        <button type="button" class="btn btn-outline-primary" sec:authorize="hasRole('ROLE_ADMIN')" ><a th:href="${'/concert/activate/' + concert.id}">Activate</a></button>
+                        <button type="button" class="btn btn-outline-primary"><a th:href="${'/concert/program/' + concert.id}" >Program</a></button>
+                        <button type="button" class="btn btn-outline-primary" th:if="${concert.videoExists()}" ><a th:href="${'/concert/video/' + concert.id}" >Video Playlist</a></button>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div>
+        <form class="form-horizontal">
+
+            <!--suppress HtmlUnknownAttribute -->
+            <div th:if="${flash != null}" class="form-group row">
+                <label class="col-sm-2 control-label">Message:</label>
+                <div class="col-sm-6">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <p class="form-control-static" th:text="${flash}">Message</p></div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Season:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <a th:href="${'/season/' + concert.season.id}">
+                    <p class="form-control-static" th:text="${concert.season}">Season</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Title:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <p class="form-control-static" th:text="${concert.title}">Title</p>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Prefix:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <p class="form-control-static" th:text="${concert.prefix}">Prefix</p>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Notes:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <p class="form-control-static" th:text="${concert.notes}">Notes</p>
+                </div>
+            </div>
+
+            <h3>Performances</h3>
+            <table class="table table-striped">
+                <tr>
+                    <td/>
+                    <td/>
+                    <td><!--suppress HtmlUnknownAttribute -->
+                        <a th:href="${'/performance/new/' + concert.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Add</a></td>
+                </tr>
+                <tr>
+                    <th>Date/Time</th>
+                    <th>Venue</th>
+                    <th>Action</th>
+                </tr>
+                <!--suppress HtmlUnknownAttribute -->
+                <tr th:each="performance : ${performances}">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <td th:text="${performance.dateTimeString}">Date/Time</td>
+                    <!--suppress HtmlUnknownAttribute -->
+                    <td th:text="${performance.venue.name}">Venue</td>
+                    <td>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <a th:href="${'/performance/' + performance.id}">Show</a>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <a th:href="${'/performance/edit/' + performance.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Edit</a>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <a th:href="${'/performance/delete/' + performance.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Delete</a>
+                    </td>
+                </tr>
+            </table>
+
+            <h3>Works</h3>
+            <table class="table table-striped">
+                <tr>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td><!--suppress HtmlUnknownAttribute -->
+                        <a th:href="${'/concertWork/newWithConcert/' + concert.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Add</a></td>
+                </tr>
+                <tr>
+                    <th>Track</th>
+                    <th>Title</th>
+                    <th>Composer</th>
+                    <th>Performed by Chorus</th>
+                    <th>Action</th>
+                </tr>
+                <!--suppress HtmlUnknownAttribute -->
+                <tr th:each="concertWorkDisplay : ${concertWorkDisplays}">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <td th:text="${concertWorkDisplay.track}"></td>
+                    <!--suppress HtmlUnknownAttribute -->
+                    <td th:text="${concertWorkDisplay.title}"></td>
+                    <!--suppress HtmlUnknownAttribute -->
+                    <td th:text="${concertWorkDisplay.composer.name}"></td>
+                    <!--suppress HtmlUnknownAttribute -->
+                    <td th:text="${concertWorkDisplay.performedByGroup}"></td>
+                    <td>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <a th:href="${'/concertWork/' + concertWorkDisplay.concertWorkId}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">Show</a>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <a th:href="${'/concertWork/edit/' + concertWorkDisplay.concertWorkId}" sec:authorize="hasRole('ROLE_ADMIN')" >Edit</a>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <a th:href="${'/concertWork/delete/' + concertWorkDisplay.concertWorkId}" sec:authorize="hasRole('ROLE_ADMIN')" >Delete</a>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <a th:if="${concertWorkDisplay.audioExists}" th:href="${'/concertWork/audioList/' + concertWorkDisplay.concertWorkId}"  sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">Listen</a>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <a th:if="${concertWorkDisplay.videoExists}" th:href="${'/concertWork/video/' + concertWorkDisplay.concertWorkId}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">Watch</a>
+                    </td>
+                </tr>
+            </table>
+
+            <h3>Contributors</h3>
+            <table class="table table-striped">
+                <tr>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td><!--suppress HtmlUnknownAttribute -->
+                        <a th:href="${'/concertContributor/newWithConcert/' + concert.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Add</a></td>
+                </tr>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+                <!--suppress HtmlUnknownAttribute -->
+                <tr th:each="concertContributor : ${concertContributors}">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <td th:text="${concertContributor.contributor.firstName}">First Name</td>
+                    <!--suppress HtmlUnknownAttribute -->
+                    <td th:text="${concertContributor.contributor.lastName}">Last Name</td>
+                    <!--suppress HtmlUnknownAttribute -->
+                    <td th:text="${concertContributor.concertContributorRole}">Role</td>
+                    <td>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <a th:href="${'/contributor/' + concertContributor.contributor.id}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">Show</a>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <a th:href="${'/contributor/edit/' + concertContributor.contributor.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Edit</a>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <a th:href="${'/contributor/delete/' + concertContributor.contributor.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Delete</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

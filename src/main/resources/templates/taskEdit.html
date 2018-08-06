@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker3.min.css"/>
+
+    <script type="text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <h2>Task</h2>
+    <div>
+        <!--suppress HtmlUnknownAttribute, HtmlUnknownAttribute -->
+        <form th:object="${task}" th:action="@{/task/save}" method="post">
+
+            <!--suppress HtmlUnknownAttribute -->
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Name:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <input type="text" class="form-control" th:field="*{name}" autofocus="autofocus"/>
+                    <div class="validation-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Description:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <textarea rows="5" cols="80" th:field="*{description}"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <label class="control-label">Task Unit:</label>
+                    <div>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <select class="form-control" th:field="*{taskUnit}">
+                            <option th:each="unit : ${taskUnits}"
+                                    th:value="${unit}"
+                                    th:text="${unit}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-8">
+                    <label class="control-label">Event:</label>
+                    <div>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <select class="form-control" th:field="*{event}">
+                            <option th:each="event : ${events}"
+                                    th:value="${event.id}"
+                                    th:text="${event}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label class="control-label">Volunteers:</label>
+                    <div>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <input type="text" class="form-control" th:field="*{slots}"/>
+                        <div class="validation-error" th:if="${#fields.hasErrors('slots')}" th:errors="*{slots}"></div>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label class="control-label">Estimated Effort per Volunteer:</label>
+                    <div>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <input type="text" class="form-control" th:field="*{effort}"/>
+                        <div class="validation-error" th:if="${#fields.hasErrors('effort')}" th:errors="*{effort}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <label class="control-label">Deadline (mm/dd/yyyy):</label>
+                    <div>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <input type="text" class="form-control" th:field="*{eventDateString}" id="dateField"/>
+                        <div class="validation-error" th:if="${#fields.hasErrors('eventDateString')}" th:errors="*{eventDateString}"></div>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label class="control-label">Task Event Time (hh24:mm):</label>
+                    <div>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <input type="text" class="form-control" th:field="*{eventTimeString}"/>
+                        <div class="validation-error" th:if="${#fields.hasErrors('eventTimeString')}" th:errors="*{eventTimeString}"></div>
+                    </div>
+                </div>
+
+                <div class="form-groupcol-sm-4">
+                    <label class="control-label">Active:</label>
+                    <div>
+                        <!--suppress HtmlUnknownAttribute -->
+                        <input type="checkbox" class="form-control" th:field="*{active}"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Notes:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <textarea rows="5" cols="80" th:field="*{notes}"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="../static/js/datepicker.js" th:src="@{/js/datepicker.js}"></script>
+
+</body>
+</html>
+
+

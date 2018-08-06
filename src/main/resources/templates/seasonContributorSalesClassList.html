@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/ticketingHeader :: header"></th:block> /*/-->
+    <h2>Season Contributor Sales Class List</h2>
+
+    <nav class="navbar navbar-expand-lg navbar-light style="background-color: #e3f2fd;" rounded">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <button type="button" class="btn btn-outline-primary" sec:authorize="hasRole('ROLE_TICKETER')"> <a th:href="${'/seasonContributorSalesClass/new'}">Add</a> </button>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </nav>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Season</th>
+            <th>Contributor</th>
+            <th>Sales Class</th>
+            <th>Status</th>
+            <th>Count</th>
+            <th>Action</th>
+        </tr>
+        <!--suppress HtmlUnknownAttribute -->
+        <tr th:each="seasonContributorSalesClass : ${seasonContributorSalesClasses}">
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${seasonContributorSalesClass.concertContributor.concert.season}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${seasonContributorSalesClass.concertContributor.contributor.name}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${seasonContributorSalesClass.salesClass.name}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${seasonContributorSalesClass.ticketStatus}"></td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${seasonContributorSalesClass.count}"></td>
+            <td>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/seasonContributorSalesClass/' + seasonContributorSalesClass.id}">Show</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/seasonContributorSalesClass/edit/' + seasonContributorSalesClass.id}" sec:authorize="hasRole('ROLE_TICKETER')" >Edit</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/seasonContributorSalesClass/delete/' + seasonContributorSalesClass.id}" sec:authorize="hasRole('ROLE_TICKETER')" >Delete</a>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

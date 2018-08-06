@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/adminHeader :: header"></th:block> /*/-->
+    <h2>User List</h2>
+
+    <nav class="navbar navbar-expand-lg navbar-light style="background-color: #e3f2fd;" rounded">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <button type="button" class="btn btn-outline-primary"> <a th:href="${'/admin/user/new'}">Add</a> </button>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </nav>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Username</th>
+            <th>Enabled</th>
+            <th>Action</th>
+        </tr>
+        <!--suppress HtmlUnknownAttribute -->
+        <tr th:each="user : ${users}">
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${user.userName}">Username</td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${user.enabled}">Enabled</td>
+            <td>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/admin/user/' + user.id}">Show</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/admin/user/edit/' + user.id}">Edit</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/admin/user/delete/' + user.id}">Delete</a>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

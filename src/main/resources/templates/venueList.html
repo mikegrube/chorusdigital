@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/thymol/latest/thymol.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <h2>Venue List</h2>
+
+    <nav class="navbar navbar-expand-lg navbar-light style="background-color: #e3f2fd;" rounded">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <button type="button" class="btn btn-outline-primary" sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="${'/venue/new'}">Add</a> </button>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </nav>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>Capacity</th>
+            <th>Action</th>
+        </tr>
+        <!--suppress HtmlUnknownAttribute -->
+        <tr th:each="venue : ${venues}">
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${venue.Name}">Name</td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${venue.street}">Street</td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${venue.city}">City</td>
+            <!--suppress HtmlUnknownAttribute -->
+            <td th:text="${venue.capacity}">Capacity</td>
+            <td>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/venue/' + venue.id}">Show</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/venue/edit/' + venue.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Edit</a>
+                <!--suppress HtmlUnknownAttribute -->
+                <a th:href="${'/venue/delete/' + venue.id}" sec:authorize="hasRole('ROLE_ADMIN')" >Delete</a>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

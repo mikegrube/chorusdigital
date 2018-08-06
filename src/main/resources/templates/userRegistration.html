@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Volunteer Registration</title>
+    <!--/*/ <th:block th:include="fragments/headerincl :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <h2>Volunteer Registration</h2>
+    <div>
+
+        <!--suppress HtmlUnknownAttribute, HtmlUnknownAttribute -->
+        <form th:action="@{/admin/user/register}" th:object="${registrationRequest}" method="post">
+            <!--suppress HtmlUnknownAttribute -->
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">User Name:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <input type="text" class="form-control" th:field="*{userName}"/>
+                    <div class="validation-error" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">First Name:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <input type="text" class="form-control" th:field="*{firstName}"/>
+                    <div class="validation-error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Last Name:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <input type="text" class="form-control" th:field="*{lastName}"/>
+                    <div class="validation-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Password:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <input type="password" class="form-control" th:field="*{password}"/>
+                    <div class="validation-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Confirm Password:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <input type="password" class="form-control" th:field="*{password2}"/>
+                    <div class="validation-error" th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}"></div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Email:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <input type="text" class="form-control" th:field="*{email}"/>
+                    <div class="validation-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">Phone:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <input type="text" class="form-control" th:field="*{phone}"/>
+                    <div class="validation-error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 control-label">I agree to the terms:</label>
+                <div class="col-sm-10">
+                    <!--suppress HtmlUnknownAttribute -->
+                    <input type="checkbox" class="form-control" th:field="*{termsAgreed}"/>
+                    <div class="validation-error" th:if="${#fields.hasErrors('termsAgreed')}" th:errors="*{termsAgreed}"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <button type="submit" class="btn btn-default">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

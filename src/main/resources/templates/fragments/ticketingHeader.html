@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+
+    <title>Chorus Digital Ticketing</title>
+
+</head>
+<body>
+
+<div class="container">
+    <div th:fragment="header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" th:href="@{/}">
+                    <img alt="Group" src="/files/logo.png" th:src="@{/files/logo.png}" height="30"/>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Season Tickets</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" th:href="@{/seasonSalesClass/list}" sec:authorize="hasAuthority('ROLE_TICKETER')">Sales Class</a>
+                            <a class="dropdown-item" href="#" th:href="@{/seasonContributorSalesClass/list}" sec:authorize="hasAuthority('ROLE_TICKETER')">Status</a>
+                            <a class="dropdown-item" href="#" th:href="@{/seasonContributorSalesClass/assignRequest}" sec:authorize="hasAuthority('ROLE_TICKETER')">Assign</a>
+                            <a class="dropdown-item" href="#" th:href="@{/seasonContributorSalesClass/transferRequest}" sec:authorize="hasAuthority('ROLE_TICKETER')">Transfer</a>
+                            <a class="dropdown-item" href="#" th:href="@{/seasonContributorSalesClass/sellRequest}" sec:authorize="hasAuthority('ROLE_TICKETER')">Sell</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Concert Tickets</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" th:href="@{/concertSalesClass/list}" sec:authorize="hasAuthority('ROLE_TICKETER')">Sales Class</a>
+                            <a class="dropdown-item" href="#" th:href="@{/performanceContributorSalesClass/list}" sec:authorize="hasAuthority('ROLE_TICKETER')">Status</a>
+                            <a class="dropdown-item" href="#" th:href="@{/performanceContributorSalesClass/assignRequest}" sec:authorize="hasAuthority('ROLE_TICKETER')">Assign</a>
+                            <a class="dropdown-item" href="#" th:href="@{/performanceContributorSalesClass/transferRequest}" sec:authorize="hasAuthority('ROLE_TICKETER')">Transfer</a>
+                            <a class="dropdown-item" href="#" th:href="@{/performanceContributorSalesClass/sellRequest}" sec:authorize="hasAuthority('ROLE_TICKETER')">Sell</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span sec:authentication="name"></span></a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-link" href="#" th:href="@{/admin/user/changePassword}">Change Password</a>
+                            <a class="dropdown-link" href="#" th:href="@{/logout}">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

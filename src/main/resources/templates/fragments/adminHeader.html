@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+
+    <title>Chorus Digital</title>
+
+</head>
+<body>
+
+<div class="container">
+    <div th:fragment="header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" th:href="@{/}">
+                    <img alt="Group" src="/files/logo.png" th:src="@{/files/logo.png}" height="30"/>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/admin/user/list}" sec:authorize="hasAuthority('ROLE_ADMIN')">Users</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/admin/role/list}" sec:authorize="hasAuthority('ROLE_ADMIN')">Roles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/admin/userPrefs/list}" sec:authorize="hasAuthority('ROLE_ADMIN')">User Prefs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/metrics}" sec:authorize="hasAuthority('ROLE_ADMIN')">Metrics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/admin/load}" sec:authorize="hasAuthority('ROLE_ADMIN')">Load YAML</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/admin/upload}" sec:authorize="hasAuthority('ROLE_ADMIN')">Load YAML File</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/admin/notes}" sec:authorize="hasAuthority('ROLE_ADMIN')">System Notes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/stop}" sec:authorize="hasAuthority('ROLE_ADMIN')">Shutdown</a></li>
+                    <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span sec:authentication="name"></span></a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-link" href="#" th:href="@{/admin/user/changePassword}">Change Password</a>
+                            <a class="dropdown-link" href="#" th:href="@{/logout}">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+</body>
+</html>
